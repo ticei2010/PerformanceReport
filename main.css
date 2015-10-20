@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 20, 2015, 9:54:26 PM
+    Author     : Isaac
+*/
+
+#content {
+    width:100%
+}
+ #sidebar{
+    width: 25%;
+    float:left;
+    height: 100%;
+}
+#mainForm{
+    float:left;
+    width:74%;
+    height: 100%;
+}
+#pieceEntryTable{
+    border-style: solid;
+    border-collapse: collapse;
+    padding:0;
+    
+}
+#pieceEntry th{
+    width: 7em;
+    border-style:solid;
+}
+.movementRow{
+    background-color: lightgray;
+}

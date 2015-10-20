@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<!--
+Show Report is a web application that is intended to be used as tool for reporting
+details about the events of a performance.
+The primary data collected is the amount of time that a given piece or performance took.
+
+Developed by Isaac Tice
+Last Updated: 10/17/15
+-->
+<html>
+<head>
+	<title>Show Report</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="main.css">
+	<script src="js/libs/jquery/jquery.js"></script>
+	<script src="js/libs/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js"></script>
+	<script src="js/main.js"></script>
+</head>
+<body>
+	<div id="content">
+		<div id="sidebar">
+			<!-- The sidebar is a constant component of all "pages" of the application
+			It is intended to be the primary place of action during a performance-->
+			<div><span class="clock" id="mainTimer">adaad</span></div>
+			<button class="ui-button" id="mainTimerBtn">Open House</button>
+			<div><span class="clock" id="eventTimer"></span></div>
+			<button class="ui-button" id="eventTimerBtn">Start Piece</button>
+		</div>
+		<div id="mainForm">
+			<div id="newShow">
+				<label for="showName">Show Name</label>
+				<input type="text" id="showName"><br>
+
+				<label for="pubStart">Published Start Time</label>
+				<input type="text" id="pubStart">
+				<br>
+
+				<label for="crew">Run Crew</label>
+				<textarea id="crew"></textarea>
+				<br>
+
+				<label for="houseMgr">House Manager</label>
+				<input type="text" id="houseMgr"><br>
+
+				<label for="StageMgr">Stage Manager</label>
+				<input type="text" id="stageMgr">
+				<br>
+				<button class="ui-button">Add Pieces</button>
+			</div>
+			<div id="newPiece">
+				<table id="pieceEntryTable">
+					<thead>
+						<tr hidden>
+							<td width="4em"></td>
+							<td width="4em"></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<th colspan="2">Piece Name</th>
+							<th colspan="2">Composer</th>
+							<th>Add Movements</th>
+						</tr>
+						<tr class="subHead">
+							<th></th>
+							<th colspan="2">Movement Number</th>
+							<th colspan="2">Movement Title</th>
+						</tr>
+					</thead>
+					<tbody id="pieceEntryTemplate" hidden>
+						<tr class="pieceRow" id="piece-1">
+							<td colspan="2"><input type="text" id="pieceName"></td>
+							<td colspan="2"><input type="text" id="composer"></td>
+							<td></td>
+						</tr>
+						<tr class="movementRow">
+							<td></td>
+							<td colspan="2"><input type="text"></td>
+							<td colspan="2"><input type="text"></td>
+						</tr>
+					</tbody>
+					<tbody id="pieceEntry">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+<!--<script src="js/main.js"></script>-->
+</html>
