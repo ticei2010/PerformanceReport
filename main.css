@@ -27,7 +27,7 @@ and open the template in the editor.
     padding:0;
     
 }
-#pieceEntry th{
+#pieceEntryTable th{
     width: 7em;
     border-style:solid;
 }

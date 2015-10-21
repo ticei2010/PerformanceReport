@@ -4,19 +4,20 @@
  * and open the template in the editor.
  */
 //window.alert("text");
+var pieceCount = 0;
 
-$(document).ready(function(){
+$(document).ready(function () {
 	test();
 });
 
 function test() {
-	$("#pieceEntryTemplate").clone().appendTo($("#pieceEntry"));
-	/* $("#pieceEntry .pieceRow:last input").change(function(){
-		 if ($(":first", this).valueOf !== "") {
-			 if ($(":last", this).valueOf !== "") {
-				 $(".pieceRow:last").hide()
-				 $()
-			 }}
- }
-);*/
+	$("#pieceEntryTemplate tr").clone().appendTo($("#pieceEntry"));
+	$("#pieceEntry .pieceRow:last input").change(function () {
+		if ($(":first", this).valueOf !== "") {
+			if ($(":last", this).valueOf !== "") {
+				$("#pieceEntryTemplate tr").clone().appendTo($("#pieceEntry"));
+			}
+		}
+	}
+);
 }
