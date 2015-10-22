@@ -4,20 +4,26 @@
  * and open the template in the editor.
  */
 //window.alert("text");
-var pieceCount = 0;
+//var pieceCount = 0;
 
 $(document).ready(function () {
-	test();
+	addNewPieceRow();
 });
 
-function test() {
-	$("#pieceEntryTemplate tr").clone().appendTo($("#pieceEntry"));
-	$("#pieceEntry .pieceRow:last input").change(function () {
-		if ($(":first", this).valueOf !== "") {
-			if ($(":last", this).valueOf !== "") {
-				$("#pieceEntryTemplate tr").clone().appendTo($("#pieceEntry"));
-			}
+
+function newPieceListener(event) {
+	var parent = $(event.target).parents("tr");
+	if ($("input:first", parent).val() !== "") {
+		if ($("input:last", parent).val() !== "") {
+			$("#pieceEntry .pieceRow:last").unbind("change");
+			addNewPieceRow();
 		}
 	}
-);
 }
+
+function addNewPieceRow() {
+	var temp = $("#pieceEntryTemplate .pieceRow").clone()
+	temp.change(event, newPieceListener)
+	$("#pieceEntry").append(temp)
+}
+
