@@ -3,75 +3,67 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//window.alert("text");
-var pieceCount = 0;
+//var pieceCount = 0;
 
 $(document).ready(function () {
-	addNewPieceRow();
+	addPieceRow(0);
+	delegateListeners();
 });
 
+function delegateListeners() {
+	$("#pieceEntryTable").on("change", ".pieceRow", function () { pieceListener() });
+	$("#pieceEntryTable").on("click", function (event) { movementListener(event); });
 
-function newPieceListener(event) {
-		var parent = $(event.target).parents("tr");
-		if ($("input:first", parent).val() !== "") {
-			if ($("input:last", parent).val() !== "") {
-				$("#pieceEntry .pieceRow:last").unbind("change");
-				addNewPieceRow();
-			}
-		}
 }
 
-function addPieceGroup() {
-	var test = $("<tbody>", {
-		"id": "pieceEntry" + pieceCount,
-		"class": "pieceEntry"
-	});
-	$("#pieceEntryTable").append(test);
-}
-
-function addNewPieceRow() {
-	
-	var temp = $("#pieceRow").clone();
-	temp.change(event, newPieceListener).attr("id", "pieceRow" + pieceCount);
-	//add a new tbody to serve as a container for this piece
-	$("#pieceEntryTable").append($("<tbody>", {
-		"id": "pieceEntry" + pieceCount,
-		"class": "pieceEntry",
-		on: {
-			focusin: function (event) { addNewMovementRow(event); },
-			
-		}
-	}));
-	temp.appendTo($("#pieceEntry" + pieceCount));
-	pieceCount += 1;
-}
-
-function addNewMovementRow(event) {
-	if (event.type == "focusin") {
-		//begin by selecting the tbody element of the active piece
-		//then retrieve the piece id as well as the last movement id (if there was one)
-		var parent = $(event.target).parents("tbody");
-		var piece = $(".pieceRow", parent);
-		piece = piece.attr("id").match("\\d");
-		piece = piece[0];
-		var lastMovement = $(".movementRow:last", parent);
-		if (lastMovement != null & lastMovement.length != 0) {
-			//only add a new movemnt row if the last one has been used
-			if ($("input:first", lastMovement).val() != "") {
-				lastMovement = lastMovement.attr("id").match("^movementRow\\d-(\\d)");
-				lastMovement = lastMovement[1];
-				$(".movementRow").unbind();
-			} else {
-				return;
-			};
-		} else {
-			lastMovement = -1;
-		};
-		var rowId = "movementRow" + piece + "-" + lastMovement + 1
-		parent.append($("#movementRow").clone().attr('id', rowId));
-
+function pieceListener(event) {
+	//inspect the last piece and add a new row if it has content
+	var lastPiece = $("#pieceEntryTable .pieceRow:last")
+	if ($("input", lastPiece).val() != "") {
+		lastPiece = lastPiece.attr("id").match("\\d");
+		var pieceId = Number(lastPiece[0]) + 1;
+		addPieceRow(pieceId);
 	}
 }
-function newMovementListener() {
+
+
+function addPieceRow(pieceId) {
+	//add a new tbody to serve as a container for this piece
+	$("#pieceEntryTable").append($("<tbody>", {
+		"id": "pieceEntry" + pieceId,
+		"class": "pieceEntry",
+	}));
+
+	var temp = $("#pieceRow").clone().attr("id", "pieceRow" + pieceId);
+	temp.appendTo($("#pieceEntry" + pieceId));
+	pieceId += 1;
+}
+
+function addMovementRow(parent, movementId) {
+	parent.append($("#movementRow").clone().attr('id',"movementRow" + movementId));
+}
+function movementListener(event) {
+	//begin by selecting the tbody element of the active piece
+	//then retrieve the piece id as well as the last movement id (if there was one)
+	var parent = $(event.target).parents("tbody");
+
+	var piece = $(".pieceRow", parent);
+	piece = piece.attr("id").match("\\d");
+	piece = piece[0];
+
+	var lastMovement = $(".movementRow:last", parent);
+	if (lastMovement != null && lastMovement.length != 0) {
+		//only add a new movemnt row if the last one has been used
+		if ($("input:first", lastMovement).val() != "") {
+			lastMovement = lastMovement.attr("id").match("^movementRow\\d-(\\d)");
+			lastMovement = lastMovement[1];
+		} else {
+			return; // the last row does not contain info, so don't add a new one
+		};
+	} else {
+		lastMovement = -1;
+	};
+	var movementId =  piece + "-" + (lastMovement + 1);
+	addMovementRow(parent, movementId);
 
 }
