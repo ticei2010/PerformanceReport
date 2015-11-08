@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 function delegateListeners() {
 	$("#pieceEntryTable").on("change", ".pieceRow", function () { pieceListener() });
-	$("#pieceEntryTable").on("click", function (event) { movementListener(event); });
+	$("#pieceEntryTable").on("click", function (event) { emptyClear(event); movementListener(event); });
 
 }
 
@@ -42,15 +42,18 @@ function addPieceRow(pieceId) {
 function addMovementRow(parent, movementId) {
 	parent.append($("#movementRow").clone().attr('id',"movementRow" + movementId));
 }
+
 function movementListener(event) {
 	//begin by selecting the tbody element of the active piece
 	//then retrieve the piece id as well as the last movement id (if there was one)
+	
+
 	var parent = $(event.target).parents("tbody");
 
 	var piece = $(".pieceRow", parent);
 	piece = piece.attr("id").match("\\d");
 	piece = piece[0];
-
+	
 	var lastMovement = $(".movementRow:last", parent);
 	if (lastMovement != null && lastMovement.length != 0) {
 		//only add a new movemnt row if the last one has been used
@@ -65,5 +68,18 @@ function movementListener(event) {
 	};
 	var movementId =  piece + "-" + (lastMovement + 1);
 	addMovementRow(parent, movementId);
+}
 
+function emptyClear(event) {
+	//remove all empty movement rows except for the one in the selected piece
+	var parent = $(event.target).parents("tbody")
+	var pieces = $(".pieceEntry", $("#addPieces"))
+	for (i = 0; i < pieces.length; i++) {
+		if (pieces[i].id != parent[0].id) {
+			var lastMovement = $(".movementRow:last", pieces[i]);
+			if ($("input:first", lastMovement).val() == "") {
+				lastMovement.remove();
+			}
+		}
+	}
 }
