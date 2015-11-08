@@ -14,7 +14,7 @@ Last Updated: 10/17/15
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="main.css">
 	<script src="js/libs/jquery/jquery.js"></script>
-	<script src="js/libs/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js"></script>
+	<!--<script src="js/libs/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js"></script>-->
 	<script src="js/main.js"></script>
 </head>
 <body>
@@ -22,10 +22,11 @@ Last Updated: 10/17/15
 		<div id="sidebar">
 			<!-- The sidebar is a constant component of all "pages" of the application
 			It is intended to be the primary place of action during a performance-->
-			<div><span class="clock" id="mainTimer">adaad</span></div>
-			<button class="ui-button" id="mainTimerBtn">Open House</button>
+			<div><span class="clock" id="mainTimer"><input type="text"/>adaad</span></div>
+			<script>//showTimer = new Timer($("#mainTimer input"));</script>
+			<button class="ui-button" id="mainTimerBtn" onclick="showTimer.start()">Open House</button>
 			<div><span class="clock" id="eventTimer"></span></div>
-			<button class="ui-button" id="eventTimerBtn">Start Piece</button>
+			<button class="ui-button" id="eventTimerBtn" onclick="showTimer.stop()">Start Piece</button>
 		</div>
 		<div id="mainForm">
 			<div id="newShow">

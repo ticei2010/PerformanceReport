@@ -8,11 +8,12 @@
 $(document).ready(function () {
 	addPieceRow(0);
 	delegateListeners();
+	showTimer = new Timer($("#mainTimer input"));
 });
 
 function delegateListeners() {
 	$("#pieceEntryTable").on("change", ".pieceRow", function () { pieceListener() });
-	$("#pieceEntryTable").on("click", function (event) { emptyClear(event); movementListener(event); });
+	$("#pieceEntryTable").on("click", function (event) { hideEmptyMovement(event); movementListener(event); });
 
 }
 
@@ -70,7 +71,7 @@ function movementListener(event) {
 	addMovementRow(parent, movementId);
 }
 
-function emptyClear(event) {
+function hideEmptyMovement(event) {
 	//remove all empty movement rows except for the one in the selected piece
 	var parent = $(event.target).parents("tbody")
 	var pieces = $(".pieceEntry", $("#addPieces"))
@@ -82,4 +83,33 @@ function emptyClear(event) {
 			}
 		}
 	}
+}
+
+
+
+function Timer(target) {
+	this.target = target;//target must be a jquery object reference
+	this.target.val("0:0:0");
+	this.startTime=0;
+	this.hour=0;
+	this.min=0;
+	this.sec = -1;
+	this.timer;
+}
+ Timer.prototype.tick = function (ctxt) {
+ 	this.sec++;
+ 	if (this.sec == 60) {this.min++; this.sec = 0;
+ 		if (this.min == 60) {this.hour++; this.min = 0;}
+ 	}
+ 	//this.timer = setTimeout(this.runTimer(), 1000, sec, min, hour);
+ 	this.target.val(this.hour + ":" +this.min + ":" + this.sec)
+}
+ Timer.prototype.start = function () {
+ 	this.startTime = new Date();
+ 	this.timer = setInterval(function (ctxt) { ctxt.tick(ctxt) }, 1000, this);
+ }
+
+
+Timer.prototype.stop = function () {
+	clearInterval(this.timer);
 }
